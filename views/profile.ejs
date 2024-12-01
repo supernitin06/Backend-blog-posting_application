@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-200 p-6 min-h-screen font-sans">
+    <!-- Header Section -->
+    <header class="flex justify-between items-center bg-white shadow-md p-4 rounded-md mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Hello, <%= user.name %>!</h1>
+        <a href="/logout" 
+           class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition">
+           Logout
+        </a>
+    </header>
+
+    <!-- Create Post Section -->
+    <section class="bg-white shadow-md rounded-md p-6 max-w-lg mx-auto">
+        <h2 class="text-2xl font-semibold text-gray-800 text-center mb-4">Create Your Post</h2>
+        <form action="/post" method="POST" class="space-y-4">
+            <label for="postContent" class="block text-lg font-medium text-gray-700">Write your post:</label>
+            <textarea id="postContent" 
+                      name="content" 
+                      rows="4" 
+                      class="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="What's on your mind?"></textarea>
+            <input type="submit" value="Create Post" 
+                   class="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer">
+        </form>
+    </section>
+
+    <!-- Display Posts Section -->
+    <section class="mt-10">
+        <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Your Posts</h2>
+        <div class="max-w-lg mx-auto space-y-6">
+            <% user.posts.forEach(post => { %>
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                    <p class="text-lg text-gray-800 mb-2"><%= post.content %></p>
+                    <p class="text-sm text-gray-500 mb-4">Posted by @<%= user.name %></p>
+                    <!-- Like Button -->
+                    <a href="/like/<%= post.id %>" class="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        <span>Like</span>
+                    </a>
+                    
+                    <!-- Edit Button -->
+                    <a href="/post/edit/<%= post.id %>" 
+                       class="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" 
+                             class="w-6 h-6">
+                            <path d="M3 17.25V21h3.75l11.75-11.75L14.25 5.5 2.5 17.25c-.11.11-.19.24-.23.37-.08.17-.12.35-.12.53z"/>
+                        </svg>
+                        <span>Edit</span>
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+    </section>
+
+    <!-- Back Button -->
+    <footer class="text-center mt-10">
+        <a href="/" 
+           class="text-blue-500 text-lg font-medium underline hover:text-blue-700 transition">
+           Back
+        </a>
+    </footer>
+</body>
+</html>
